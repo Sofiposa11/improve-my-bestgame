@@ -20,7 +20,7 @@ class Game:
         self.background_scroll = 0
         self.background_speed = 2
         self.collision_count = 0
-        self.max_collisions = 3
+        self.max_collisions = 10
         # Puntaje
         self.score = 0
         self.font = pygame.font.SysFont(None, 48)
@@ -75,6 +75,7 @@ class Game:
             if player_rect.colliderect(obstacle.rect):
                 self.collision_count += 1
                 self.obstacles.remove(obstacle)
+                self.player.collide()
                 if self.collision_count >= self.max_collisions:
                     self.draw_text(
                         "¡Perdiste!", font, BLACK, self.screen, WIDTH // 2, HEIGHT // 2
