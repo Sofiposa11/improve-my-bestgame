@@ -75,6 +75,7 @@ class Game:
             if player_rect.colliderect(obstacle.rect):
                 self.collision_count += 1
                 self.obstacles.remove(obstacle)
+                # La función de la animación se activa cuando colisiona con un obstáculo
                 self.player.collide()
                 if self.collision_count >= self.max_collisions:
                     self.draw_text(

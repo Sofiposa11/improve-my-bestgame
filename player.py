@@ -17,6 +17,7 @@ class Player:
         # Cambié el código de los frames ya que este sprite viene con los frames por separado
         self.run_frames = self.run_frames = [pygame.image.load(f"assets/ninja/run/0{i}.png").convert_alpha() for i in range(10)]
         self.jump_frames = [pygame.image.load(f"assets/ninja/jump/{i}.png").convert_alpha() for i in range(5)]
+        # Nueva animación de golpe
         self.hit_frames = [pygame.image.load(f"assets/ninja/hit/{i}.png").convert_alpha() for i in range(4)]
         self.hit_frame_index = 0
         self.hit_animation_playing = False
@@ -24,6 +25,7 @@ class Player:
         self.frame_index = 0
         self.animation_speed = 0.3
 
+    # Creé una función para poder activar la animación cuando colisiona en el archivo game.py
     def collide(self):
         self.hit_animation_playing = True
         self.hit_frame_index = 0
@@ -35,12 +37,13 @@ class Player:
             self.velocity_y = self.jump_power
             self.on_ground = False
 
+        # Especifico la duración y la velocidad de la animación
         if self.hit_animation_playing:
             self.hit_animation_timer += 1
             if self.hit_animation_timer >= 10:
                 self.hit_frame_index = (self.hit_frame_index + 1) % 4
                 self.hit_animation_timer = 0
-            if self.hit_frame_index == 3:  # Changed from 0 to 3
+            if self.hit_frame_index == 3: 
                 self.hit_animation_playing = False
     
         self.velocity_y += self.gravity
@@ -52,6 +55,7 @@ class Player:
 
     def draw(self, surface):
 
+        # Separo las animaciones para que no se activen a la vez
         if self.hit_animation_playing and self.hit_frames:
             frame = self.hit_frames[self.hit_frame_index]
             surface.blit(frame, (self.x, self.y))
