@@ -21,6 +21,10 @@ class Game:
         self.background_speed = 2
         self.collision_count = 0
         self.max_collisions = 3
+        # Puntaje
+        self.score = 0
+        self.font = pygame.font.SysFont(None, 48)
+        self.last_score_increment = pygame.time.get_ticks()
 
     def run(self):
         running = True
@@ -45,6 +49,12 @@ class Game:
         self.background_scroll -= self.background_speed
         if self.background_scroll <= -self.background_image.get_width():
             self.background_scroll = 0
+
+        # Incrementar puntaje (1 punto cada medio segundo)
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_score_increment >= 300:  # 300 milisegundos = 0.3 segundos
+            self.score += 1
+            self.last_score_increment = current_time
 
         if random.randint(0, 100) < 1:
             obstacle_x = WIDTH
@@ -82,6 +92,8 @@ class Game:
         )
 
         self.player.draw(self.screen)
+
+        self.draw_text(f"Puntuación: {self.score}", self.font, BLACK, self.screen, 650, 30)
 
         for obstacle in self.obstacles:
             obstacle.draw(self.screen)
