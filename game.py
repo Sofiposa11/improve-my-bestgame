@@ -19,8 +19,8 @@ class Game:
         self.background_image = pygame.image.load("assets/background.png").convert()
         self.background_scroll = 0
         self.background_speed = 2
-        self.collision_count = 0
-        self.max_collisions = 10
+        # Se establece un límite de vidas
+        self.lives = 3
         # Puntaje
         self.score = 0
         self.font = pygame.font.SysFont(None, 48)
@@ -73,11 +73,12 @@ class Game:
         player_rect = self.player.get_rect()
         for obstacle in self.obstacles:
             if player_rect.colliderect(obstacle.rect):
-                self.collision_count += 1
                 self.obstacles.remove(obstacle)
                 # La función de la animación se activa cuando colisiona con un obstáculo
                 self.player.collide()
-                if self.collision_count >= self.max_collisions:
+                # Se resta una vida cada que el personaje colisiona con un obstáculo
+                self.lives -= 1
+                if self.lives <= 0:
                     self.draw_text(
                         "¡Perdiste!", font, BLACK, self.screen, WIDTH // 2, HEIGHT // 2
                     )
@@ -100,8 +101,9 @@ class Game:
         for obstacle in self.obstacles:
             obstacle.draw(self.screen)
 
+        # Se muestra en pantalla cuantas vidas tiene el jugador
         self.draw_text(
-            f"Colisiones: {self.collision_count}", font, BLACK, self.screen, 100, 30
+            f"Vidas: {self.lives}", font, BLACK, self.screen, 90, 30
         )
 
     def draw_text(self, text, font, color, surface, x, y):
