@@ -74,7 +74,7 @@ class Game:
         ]
 
         if self.score % 30 == 0 and len(self.life_boosts) == 0 and self.lives < 10:
-            life_boost = LifeBoost(WIDTH, HEIGHT - 45)
+            life_boost = LifeBoost(WIDTH, HEIGHT - 60)
             self.life_boosts.append(life_boost)
 
         for life_boost in self.life_boosts:

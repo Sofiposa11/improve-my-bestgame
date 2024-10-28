@@ -5,7 +5,7 @@ from config import *
 
 class Obstacle:
     def __init__(self, x, y):
-        self.frames = [pygame.transform.scale(pygame.image.load(f"assets/obstacle/obs{i}.png").convert_alpha(), (50, 50)) for i in range(4)]
+        self.frames = [pygame.transform.scale(pygame.image.load(f"assets/obstacle/obs{i}.png").convert_alpha(), (OBJECT_WIDTH, OBJECT_HEIGHT)) for i in range(4)]
         self.image = self.frames[0]
         self.rect = self.image.get_rect()
         self.rect.x = x
