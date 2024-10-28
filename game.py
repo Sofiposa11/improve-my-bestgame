@@ -61,7 +61,7 @@ class Game:
 
         if random.randint(0, 80) < 1:
             obstacle_x = WIDTH
-            obstacle_y = HEIGHT - 50
+            obstacle_y = HEIGHT - 60
             self.obstacles.append(Obstacle(obstacle_x, obstacle_y))
 
         for obstacle in self.obstacles:
