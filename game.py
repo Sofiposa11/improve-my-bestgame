@@ -4,6 +4,7 @@ import sys
 from config import HEIGHT, FPS, WHITE, WIDTH, BLACK
 from player import Player
 from obstacle import Obstacle
+from lifeboost import LifeBoost
 
 pygame.font.init()
 font = pygame.font.SysFont(None, 48)
@@ -23,6 +24,7 @@ class Game:
         self.lives = 10
         # Puntaje
         self.score = 0
+        self.life_boosts = []
         self.font = pygame.font.SysFont(None, 48)
         self.last_score_increment = pygame.time.get_ticks()
 
@@ -46,7 +48,7 @@ class Game:
     def update(self):
         self.player.update()
         
-        # Aqui creo el efecto de Parallax, moviendo cada capa a una velocidad diferente
+        # Actualiza el fondo
         self.background_offset -= 1
         if self.background_offset < -WIDTH:
             self.background_offset = 0
@@ -70,6 +72,18 @@ class Game:
             for obstacle in self.obstacles
             if obstacle.rect.x + obstacle.rect.width > 0
         ]
+
+        if self.score % 30 == 0 and len(self.life_boosts) == 0 and self.lives < 10:
+            life_boost = LifeBoost(WIDTH, random.randint(0, HEIGHT - 50))
+            self.life_boosts.append(life_boost)
+
+        for life_boost in self.life_boosts:
+            life_boost.update()
+            if life_boost.rect.colliderect(self.player.get_rect()):
+                self.lives += 1
+                self.life_boosts.remove(life_boost)
+            if life_boost.rect.x < -life_boost.rect.width:
+                self.life_boosts.remove(life_boost)
 
         player_rect = self.player.get_rect()
         for obstacle in self.obstacles:
@@ -97,14 +111,15 @@ class Game:
         self.player.draw(self.screen)
 
         self.draw_text(f"Puntuación: {self.score}", self.font, BLACK, self.screen, 650, 30)
+        # Se muestra en pantalla cuantas vidas tiene el jugador
+        self.draw_text( f"Vidas: {self.lives}", font, BLACK, self.screen, 90, 30)
 
         for obstacle in self.obstacles:
             obstacle.draw(self.screen)
 
-        # Se muestra en pantalla cuantas vidas tiene el jugador
-        self.draw_text(
-            f"Vidas: {self.lives}", font, BLACK, self.screen, 90, 30
-        )
+        for life_boost in self.life_boosts:
+            life_boost.draw(self.screen)        
+        
 
     def draw_text(self, text, font, color, surface, x, y):
         textobj = font.render(text, True, color)
@@ -113,4 +128,3 @@ class Game:
         surface.blit(textobj, textrect)
 
 
-        # ARREGLAR FONDO

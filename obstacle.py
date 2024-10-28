@@ -1,10 +1,10 @@
 import pygame
-from config import RED
+from config import *
 
 
 class Obstacle:
     def __init__(self, x, y):
-        self.rect = pygame.Rect(x, y, 50, 50)
+        self.rect = pygame.Rect(x, y, OBJECT_WIDTH, OBJECT_HEIGHT)
         self.speed = 5
 
     def update(self):
