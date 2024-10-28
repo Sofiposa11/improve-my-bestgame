@@ -16,11 +16,11 @@ class Game:
         self.clock = pygame.time.Clock()
         self.player = Player(100, HEIGHT - 50)
         self.obstacles = []
-        self.background_image = pygame.image.load("assets/background.png").convert()
-        self.background_scroll = 0
-        self.background_speed = 2
+        # Cambié el fondo
+        self.background_image = pygame.image.load("assets/def_bg.png")
+        self.background_offset = 0
         # Se establece un límite de vidas
-        self.lives = 3
+        self.lives = 10
         # Puntaje
         self.score = 0
         self.font = pygame.font.SysFont(None, 48)
@@ -37,7 +37,7 @@ class Game:
                     running = False
 
             self.update()
-            self.draw()
+            self.draw(self.screen)
 
             pygame.display.flip()
 
@@ -45,10 +45,11 @@ class Game:
 
     def update(self):
         self.player.update()
-
-        self.background_scroll -= self.background_speed
-        if self.background_scroll <= -self.background_image.get_width():
-            self.background_scroll = 0
+        
+        # Aqui creo el efecto de Parallax, moviendo cada capa a una velocidad diferente
+        self.background_offset -= 1
+        if self.background_offset < -WIDTH:
+            self.background_offset = 0
 
         # Incrementar puntaje (1 punto cada medio segundo)
         current_time = pygame.time.get_ticks()
@@ -87,12 +88,11 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-    def draw(self):
-        self.screen.blit(self.background_image, (self.background_scroll, 0))
-        self.screen.blit(
-            self.background_image,
-            (self.background_scroll + self.background_image.get_width(), 0),
-        )
+    def draw(self, surface):
+        
+        # Cada capa se dibuja dos veces, una al lado de la otra, para que el efecto de scrolling sea más fluido. 
+        surface.blit(self.background_image, (self.background_offset, 0))
+        surface.blit(self.background_image, (self.background_offset + WIDTH, 0))
 
         self.player.draw(self.screen)
 
@@ -111,3 +111,6 @@ class Game:
         textrect = textobj.get_rect()
         textrect.center = (x, y)
         surface.blit(textobj, textrect)
+
+
+        # ARREGLAR FONDO

@@ -7,18 +7,20 @@ class Player:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.width = 32
-        self.height = 32
+        # Ajusté el tamaño del personaje
+        self.width = 64
+        self.height = 64
         self.speed = 5
         self.jump_power = -20
         self.gravity = 1
         self.velocity_y = 0
         self.on_ground = True
         # Cambié el código de los frames ya que este sprite viene con los frames por separado
-        self.run_frames = self.run_frames = [pygame.image.load(f"assets/ninja/run/0{i}.png").convert_alpha() for i in range(10)]
-        self.jump_frames = [pygame.image.load(f"assets/ninja/jump/{i}.png").convert_alpha() for i in range(5)]
+        # Además escalé cada uno de los frames para que hagan match con el tamaño del personaje
+        self.run_frames = [pygame.transform.scale(pygame.image.load(f"assets/ninja/run/0{i}.png").convert_alpha(), (self.width, self.height)) for i in range(10)]
+        self.jump_frames = [pygame.transform.scale(pygame.image.load(f"assets/ninja/jump/{i}.png").convert_alpha(), (self.width, self.height)) for i in range(5)]
         # Nueva animación de golpe
-        self.hit_frames = [pygame.image.load(f"assets/ninja/hit/{i}.png").convert_alpha() for i in range(4)]
+        self.hit_frames = [pygame.transform.scale(pygame.image.load(f"assets/ninja/hit/{i}.png").convert_alpha(), (self.width, self.height)) for i in range(4)]
         self.hit_frame_index = 0
         self.hit_animation_playing = False
         self.hit_animation_timer = 0
