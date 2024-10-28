@@ -59,7 +59,7 @@ class Game:
             self.score += 1
             self.last_score_increment = current_time
 
-        if random.randint(0, 100) < 1:
+        if random.randint(0, 80) < 1:
             obstacle_x = WIDTH
             obstacle_y = HEIGHT - 50
             self.obstacles.append(Obstacle(obstacle_x, obstacle_y))
@@ -74,7 +74,7 @@ class Game:
         ]
 
         if self.score % 30 == 0 and len(self.life_boosts) == 0 and self.lives < 10:
-            life_boost = LifeBoost(WIDTH, random.randint(0, HEIGHT - 50))
+            life_boost = LifeBoost(WIDTH, HEIGHT - 45)
             self.life_boosts.append(life_boost)
 
         for life_boost in self.life_boosts:

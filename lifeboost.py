@@ -1,6 +1,7 @@
 import pygame
 from config import *
 
+
 class LifeBoost:
     def __init__(self, x, y):
         self.image = pygame.image.load('assets/health.png')
@@ -12,8 +13,11 @@ class LifeBoost:
 
     def update(self):
         self.rect.x -= self.speed
+
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
+    
 
     

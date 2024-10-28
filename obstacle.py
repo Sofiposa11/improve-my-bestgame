@@ -2,6 +2,7 @@ import pygame
 from config import *
 
 
+
 class Obstacle:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, OBJECT_WIDTH, OBJECT_HEIGHT)
