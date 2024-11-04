@@ -1,6 +1,5 @@
 import pygame
-from config import RED
-
+from config import PURPLE  # Cambiamos a PURPLE en vez de RED
 
 class Obstacle:
     def __init__(self, x, y):
@@ -11,4 +10,5 @@ class Obstacle:
         self.rect.x -= self.speed
 
     def draw(self, surface):
-        pygame.draw.rect(surface, RED, self.rect)
+        pygame.draw.rect(surface, PURPLE, self.rect)  # Cambiado a PURPLE
+
