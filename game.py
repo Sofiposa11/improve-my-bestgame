@@ -21,6 +21,7 @@ class Game:
         self.background_speed = 2
         self.collision_count = 0
         self.max_collisions = 3
+        self.score = 0
 
     def run(self):
         running = True
@@ -74,6 +75,9 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
+            elif obstacle.rect.x == 0:
+                self.score += 1
+                    
     def draw(self):
         self.screen.blit(self.background_image, (self.background_scroll, 0))
         self.screen.blit(
@@ -88,6 +92,9 @@ class Game:
 
         self.draw_text(
             f"Colisiones: {self.collision_count}", font, BLACK, self.screen, 100, 30
+        )
+        self.draw_text(
+            f"Puntaje: {self.score}", font, BLACK, self.screen, 350, 30
         )
 
     def draw_text(self, text, font, color, surface, x, y):
